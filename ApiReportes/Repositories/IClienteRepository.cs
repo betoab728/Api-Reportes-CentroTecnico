@@ -6,7 +6,7 @@ namespace ApiReportes.Repositories
     {
         //metodo para listar los clientes
         Task<IEnumerable<Cliente>> GetClientes();
-        Task<IEnumerable<OrdenesCliente>> GetOrdenesCliente();
+        Task<IEnumerable<OrdenesCliente>> GetOrdenesCliente(DateTime fechaInicio, DateTime fechaFin);
 
     }
 }

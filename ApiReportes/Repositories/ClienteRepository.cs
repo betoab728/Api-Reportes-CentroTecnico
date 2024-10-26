@@ -16,14 +16,21 @@ namespace ApiReportes.Repositories
         {
            return await  _context.Set<Cliente>().ToListAsync();
         }
-        public async Task<IEnumerable<OrdenesCliente>> GetOrdenesCliente()
+        public async Task<IEnumerable<OrdenesCliente>> GetOrdenesCliente(DateTime fechaInicio, DateTime fechaFin)
         {
+            // Convertir las fechas a UTC
+            fechaInicio = DateTime.SpecifyKind(fechaInicio, DateTimeKind.Utc);
+            fechaFin = DateTime.SpecifyKind(fechaFin, DateTimeKind.Utc);
 
-            var resultado = await _context.OrdenesCliente.FromSqlRaw(
-               "select o.id_orden as idorden, TO_CHAR(o.fecha, 'dd/mm/yyyy') as fecha," +
-               "concat(c.nombre,' ',apellido_paterno,' ',apellido_materno) as nombre,d.id_detalle_orden,d.cantidad,d.precio_unitario, d.descripcion,d.id_orden from ordenes o " +
-               "inner join detalle_orden d on o.id_orden=d.id_orden inner join clientes c on o.id_cliente=c.id_cliente"
-           ).ToListAsync();
+            var resultado = await _context.OrdenesCliente.FromSqlInterpolated($@"
+                SELECT o.id_orden AS idorden, TO_CHAR(o.fecha, 'dd/mm/yyyy') AS fecha,
+                       CONCAT(c.nombre, ' ', apellido_paterno, ' ', apellido_materno) AS nombre,
+                       d.id_detalle_orden, d.cantidad, d.precio_unitario, d.descripcion, d.id_orden 
+                FROM ordenes o 
+                INNER JOIN detalle_orden d ON o.id_orden = d.id_orden 
+                INNER JOIN clientes c ON o.id_cliente = c.id_cliente
+                WHERE o.fecha BETWEEN {fechaInicio} AND {fechaFin}
+            ").ToListAsync();
 
             foreach (var item in resultado)
             {

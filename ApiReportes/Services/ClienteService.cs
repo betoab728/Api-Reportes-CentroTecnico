@@ -19,9 +19,9 @@ namespace ApiReportes.Services
                return await _clienteRepository.GetClientes();
         }
 
-        public async Task<IEnumerable<OrdenesCliente>> GetOrdenesCliente()
+        public async Task<IEnumerable<OrdenesCliente>> GetOrdenesCliente(DateTime fechaInicio, DateTime fechaFin)
         {
-            return await _clienteRepository.GetOrdenesCliente();
+            return await _clienteRepository.GetOrdenesCliente( fechaInicio,  fechaFin);
 
          
         }
@@ -79,10 +79,10 @@ namespace ApiReportes.Services
 
         }
 
-        public async Task<byte[]> GetReporteOrdenesClientes()
+        public async Task<byte[]> GetReporteOrdenesClientes(DateTime fechaInicio, DateTime fechaFin)
         {
             // Obtener los datos de las órdenes
-            var ordenesClientes = await GetOrdenesCliente();
+            var ordenesClientes = await GetOrdenesCliente(fechaInicio,  fechaFin);
 
             // Ruta del reporte RDLC
             var reportPath = "ApiReportes.Reports.OrdenesClientes.rdlc";
@@ -112,7 +112,7 @@ namespace ApiReportes.Services
             foreach (var orden in ordenesClientes)
             {
 
-                Console.WriteLine("Ordenes de clientes: " + orden.id_detalle_orden);
+             //   Console.WriteLine("Ordenes de clientes: " + orden.id_detalle_orden);
 
                 dataTable.Rows.Add(
                     orden.id_detalle_orden,
@@ -137,6 +137,14 @@ namespace ApiReportes.Services
             // Limpiar los DataSources y agregar el modelo directamente al reporte
             report.DataSources.Clear();
             report.DataSources.Add(new ReportDataSource("DataSetOrdenesClientes", dataTable));
+
+
+            // **Agregar los parámetros al reporte**
+            report.SetParameters(new[]
+            {
+                    new ReportParameter("pdesde", fechaInicio.ToString("dd/MM/yyyy")),
+                    new ReportParameter("phasta", fechaFin.ToString("dd/MM/yyyy"))
+                });
 
             // Renderizar el reporte como PDF
             var pdf = report.Render("PDF", null, out _, out _, out _, out _, out _);

@@ -64,9 +64,9 @@ namespace ApiReportes.Controllers
 
         //endpoint para generar el reporte de las ordenes de los clientes
         [HttpGet("reporteOrdenes")]
-        public async Task<IActionResult> GetReporteOrdenesClientes()
+        public async Task<IActionResult> GetReporteOrdenesClientes([FromQuery] DateTime fechaInicio, [FromQuery] DateTime fechaFin)
         {
-            var pdf = await _clienteService.GetReporteOrdenesClientes();
+            var pdf = await _clienteService.GetReporteOrdenesClientes(fechaInicio, fechaFin);
             return File(pdf, "application/pdf", "ReporteOrdenesClientes.pdf");
         }
 
