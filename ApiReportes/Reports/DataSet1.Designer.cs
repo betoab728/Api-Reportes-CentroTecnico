@@ -729,7 +729,7 @@ namespace ApiReportes.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public ordenesclientesRow AddordenesclientesRow(int id_detalle_orden, string cantidad, string precio_unitario, string descripcion, string idorden, string fecha, string nombre) {
+            public ordenesclientesRow AddordenesclientesRow(int id_detalle_orden, string cantidad, double precio_unitario, string descripcion, string idorden, string fecha, string nombre) {
                 ordenesclientesRow rowordenesclientesRow = ((ordenesclientesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         id_detalle_orden,
@@ -777,7 +777,7 @@ namespace ApiReportes.Reports {
                 base.Columns.Add(this.columnid_detalle_orden);
                 this.columncantidad = new global::System.Data.DataColumn("cantidad", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncantidad);
-                this.columnprecio_unitario = new global::System.Data.DataColumn("precio_unitario", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnprecio_unitario = new global::System.Data.DataColumn("precio_unitario", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnprecio_unitario);
                 this.columndescripcion = new global::System.Data.DataColumn("descripcion", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescripcion);
@@ -1061,10 +1061,10 @@ namespace ApiReportes.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string precio_unitario {
+            public double precio_unitario {
                 get {
                     try {
-                        return ((string)(this[this.tableordenesclientes.precio_unitarioColumn]));
+                        return ((double)(this[this.tableordenesclientes.precio_unitarioColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'precio_unitario\' de la tabla \'ordenesclientes\' es DBNull." +

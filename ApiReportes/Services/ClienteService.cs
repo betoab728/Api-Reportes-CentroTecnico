@@ -100,7 +100,7 @@ namespace ApiReportes.Services
             var dataTable = new DataTable("OrdenesClientes");
             dataTable.Columns.Add("id_detalle_orden", typeof(int));
             dataTable.Columns.Add("cantidad", typeof(int));
-            dataTable.Columns.Add("precio_unitario", typeof(string));
+            dataTable.Columns.Add("precio_unitario", typeof(double));
             dataTable.Columns.Add("descripcion", typeof(string));
             dataTable.Columns.Add("idorden", typeof(string));
             dataTable.Columns.Add("fecha", typeof(string));
