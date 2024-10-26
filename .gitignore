@@ -1,0 +1,13 @@
+# Ignorar archivos temporales de Visual Studio
+.vs/
+
+# Ignorar binarios y archivos de compilación
+bin/
+obj/
+
+# Ignorar paquetes de NuGet
+*.nupkg
+
+
+# Ignorar otros archivos temporales y de caché
+*.log
