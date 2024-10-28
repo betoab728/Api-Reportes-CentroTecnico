@@ -11,6 +11,17 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 //servicio para la conexion a la base de datos
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
+// Habilitar CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -36,6 +47,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Usar CORS
+app.UseCors("AllowAllOrigins");
 
 app.UseAuthorization();
 
