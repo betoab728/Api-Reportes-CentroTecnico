@@ -11,6 +11,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 //servicio para la conexion a la base de datos
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
+// Configuración del puerto
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5017); // Cambia 5017 por el puerto que desees
+});
+
 // Habilitar CORS
 builder.Services.AddCors(options =>
 {
