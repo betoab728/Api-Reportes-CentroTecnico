@@ -14,6 +14,12 @@ RUN dotnet publish -c Release -o /out
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 
+# Instalar las dependencias necesarias para procesar informes
+RUN apt-get update && apt-get install -y \
+    libgdiplus \
+    libc6-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copiar los archivos compilados desde la etapa de construcción
 COPY --from=build /out .
 
